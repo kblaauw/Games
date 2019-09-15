@@ -1,0 +1,54 @@
+import random
+
+roll_results = []
+
+
+def gather_roll():
+    roll_results.append(random.randrange(1,11))
+
+
+def roll():
+    gather_roll()
+    number = roll_results[-1]
+    print("You rolled a " + str(number) + "! Now your total is: " + str(sum(roll_results)) + ".")
+
+
+def end_game():
+    if sum(roll_results) > 21:
+        print("sorry you went over 21 by " + str(sum(roll_results) - 21))
+    elif sum(roll_results) <= 21:
+        print("Your score is : " + str(sum(roll_results)))
+        computer_score = random.randint(1,21)
+        print("The computer rolled a " + str(computer_score) + "!")
+        if computer_score == sum(roll_results):
+            print("ITS A TIE!! Thanks for playing.")
+        elif computer_score > sum(roll_results):
+            print("Sorry the computer won. Thanks for playing.")
+        elif computer_score < sum(roll_results):
+            print("YOU WIN!!! thanks or playing")
+
+
+def player_round():
+    answer = input("Would you like to roll or stop?")
+    answer = answer.strip()
+    if answer == "roll":
+        roll()
+    elif answer == "stop":
+        end_game()
+
+
+def start_21():
+    player_answer = input("""To win you must be closer to 21 than me.
+     You can roll as many times as youd like
+     If you go over 21 you lose! Would you like to play?""")
+    player_answer = player_answer.strip()
+    if player_answer == "yes":
+        while sum(roll_results) <= 21:
+            player_round()
+            if sum(roll_results) > 21:
+                break
+        end_game()
+    else:
+        print("sorry to hear that.")
+
+start_21()
